@@ -65,4 +65,15 @@ fn main() {
     convert_temp("37C".to_string());
     convert_temp("212F".to_string());
     convert_temp("98.6F".to_string());
+
+    fn fibonacci(n: u8) -> u64 {
+        match n {
+            0 => 0,
+            1 => 1,
+            _ => fibonacci(n - 1) + fibonacci(n - 2),
+        }
+    }
+
+    let n = 10;
+    println!("The {}th Fibonacci number is: {}", n, fibonacci(n));
 }
