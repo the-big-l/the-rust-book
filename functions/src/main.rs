@@ -1,4 +1,5 @@
 fn main() {
+    // print Hello, world!
     println!("Hello, world!");
 
     print_lable_measurement(5, 'm');
@@ -10,6 +11,8 @@ fn main() {
     println!("The value of x is: {}", x);
 }
 
+// This function prints a measurement with its label. The label is a character.
+// For example, 'm' for meters, 's' for seconds, etc.
 fn print_lable_measurement(value: i32, lable: char) {
     println!("The measurement is: {}{}", value, lable);
 }
