@@ -77,74 +77,48 @@ fn main() {
     let n = 10;
     println!("The {}th Fibonacci number is: {}", n, fibonacci(n));
 
-    fn sing_twelve_days_of_christmas() {
-        let gifts = [
-            "a Partridge in a Pear Tree",
-            "two Turtle Doves",
-            "three French Hens",
-            "four Calling Birds",
-            "five Gold Rings",
-            "six Geese a Laying",
-            "seven Swans a Swimming",
-            "eight Maids a Milking",
-            "nine Ladies Dancing",
-            "ten Lords a Leaping",
-            "eleven Pipers Piping",
-            "twelve Drummers Drumming",
-        ];
+    let gifts: [&str; 12] = [
+        "a Partridge in a Pear Tree",
+        "two Turtle Doves",
+        "three French Hens",
+        "four Calling Birds",
+        "five Gold Rings",
+        "six Geese a Laying",
+        "seven Swans a Swimming",
+        "eight Maids a Milking",
+        "nine Ladies Dancing",
+        "ten Lords a Leaping",
+        "eleven Pipers Piping",
+        "twelve Drummers Drumming",
+    ];
 
-        let ordinals = [
-            "first", "second", "third", "fourth", "fifth", "sixth",
-            "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth",
-        ];
+    let ordinals: [&str; 12] = [
+        "first", "second", "third", "fourth", "fifth", "sixth",
+        "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth",
+    ];
 
+    // Day 1: just add the first gift: gifts[0]
+    // Day 2: add the second gift, add " and ", add the first gift
+    // Day 3: and onward: add all gifts except the first gift, concat with ", "
+    // Day 3 cont: add ", and ", add the first gift
+    fn sing_twelve_days_of_christmas(gifts: [&str; 12], ordinals: [&str; 12]) {
         for day in 0..12 {
             let ordinal = ordinals[day];
             let mut line = format!("On the {} day of Christmas my true love gave to me ", ordinal);
             
-            // Day 1: just add the first gift: gifts[0]
-            // Day 2: add the second gift and add " and " and the first gift
-            // Day 3 and onward; add gifts[2..=day] concat with ", " + " and " + gifts[0]
             if day == 0 {
                 line = line + gifts[0];
             } else if day == 1 {
                 line = line + gifts[1] + " and " + gifts[0];
             } else {
-                let gifts_line = gifts[1..=day].iter().rev().collect::<Vec<_>>().join(", ");
+                let gifts_line = gifts[1..=day].iter().rev().copied().collect::<Vec<&str>>().join(", ");
                 line = line + &gifts_line + ", and " + gifts[0];
             }
-
-
-            // let gifts_line = gifts[0..=day].iter().rev().collect::<Vec<_>>().join(", ");
-
-
-            // for i in (0..=day).rev() {
-            //     let seperator = match day {
-            //         0 => "",
-            //         1 => " ",
-            //         _ => ", ",
-            //     };
-                
-            //     if day > 1 {
-            //         line = line + ", ";
-            //     } else if day == 0 {
-            //         line = line + " ";
-            //     } else {
-            //         line = line + " ";
-            //     }
-            //     line = line + seperator + gifts[i];
-            // }
-
-            // if day == 0 {
-            //     line = line + gifts[0];
-            // } else {
-            //     line = line + "and " + gifts[0];
-            // }
             
             println!("{}.", line);
             println!();
         }
     }
 
-    sing_twelve_days_of_christmas();
+    sing_twelve_days_of_christmas(gifts, ordinals);
 }
