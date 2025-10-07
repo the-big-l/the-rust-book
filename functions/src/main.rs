@@ -95,29 +95,31 @@ fn main() {
     let ordinals: [&str; 12] = [
         "first", "second", "third", "fourth", "fifth", "sixth",
         "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth",
-    ];
+        ];
 
+        
     // Day 1: just add the first gift: gifts[0]
     // Day 2: add the second gift, add " and ", add the first gift
-    // Day 3: and onward: add all gifts except the first gift, concat with ", "
-    // Day 3 cont: add ", and ", add the first gift
+    // Day 2+: build gift line, add ", and ", add the first gift
     fn sing_twelve_days_of_christmas(gifts: [&str; 12], ordinals: [&str; 12]) {
         for day in 0..12 {
             let ordinal = ordinals[day];
-            let mut line = format!("On the {} day of Christmas my true love gave to me ", ordinal);
+            let mut verse = format!("On the {} day of Christmas my true love gave to me ", ordinal);
+            let gift_line = build_gift_line(gifts, day);
             
-            if day == 0 {
-                line = line + gifts[0];
-            } else if day == 1 {
-                line = line + gifts[1] + " and " + gifts[0];
-            } else {
-                let gifts_line = gifts[1..=day].iter().rev().copied().collect::<Vec<&str>>().join(", ");
-                line = line + &gifts_line + ", and " + gifts[0];
+            match day {
+                0 => verse.push_str(gifts[0]),
+                1 => verse.push_str(&format!("{} and {}", gifts[1], gifts[0])),
+                _ => verse.push_str(&format!("{}, and {}", gift_line, gifts[0])),
             }
             
-            println!("{}.", line);
-            println!();
+            println!("{}.\n", verse);
         }
+    }
+    
+    // Adds all gifts for "day" except the first gift, concat with ", "
+    fn build_gift_line(gifts: [&str; 12], day: usize) -> String {
+        gifts[1..=day].iter().rev().copied().collect::<Vec<&str>>().join(", ")
     }
 
     sing_twelve_days_of_christmas(gifts, ordinals);
