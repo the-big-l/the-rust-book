@@ -76,51 +76,57 @@ fn main() {
 
     let n = 10;
     println!("The {}th Fibonacci number is: {}", n, fibonacci(n));
-
-    let gifts: [&str; 12] = [
-        "a Partridge in a Pear Tree",
-        "two Turtle Doves",
-        "three French Hens",
-        "four Calling Birds",
-        "five Gold Rings",
-        "six Geese a Laying",
-        "seven Swans a Swimming",
-        "eight Maids a Milking",
-        "nine Ladies Dancing",
-        "ten Lords a Leaping",
-        "eleven Pipers Piping",
-        "twelve Drummers Drumming",
-    ];
-
-    let ordinals: [&str; 12] = [
-        "first", "second", "third", "fourth", "fifth", "sixth",
-        "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth",
-        ];
-
         
     // Day 1: just add the first gift: gifts[0]
     // Day 2: add the second gift, add " and ", add the first gift
     // Day 2+: build gift line, add ", and ", add the first gift
-    fn sing_twelve_days_of_christmas(gifts: [&str; 12], ordinals: [&str; 12]) {
+    fn sing_twelve_days_of_christmas() {
+        let ordinals = &get_ordinals();
+        let gifts = &get_gifts();
+
         for day in 0..12 {
-            let ordinal = ordinals[day];
+            let ordinal = &ordinals[day];
             let mut verse = format!("On the {} day of Christmas my true love gave to me ", ordinal);
             let gift_line = build_gift_line(gifts, day);
             
-            match day {
-                0 => verse.push_str(gifts[0]),
-                1 => verse.push_str(&format!("{} and {}", gifts[1], gifts[0])),
-                _ => verse.push_str(&format!("{}, and {}", gift_line, gifts[0])),
-            }
+            verse = match day {
+                0 => verse + &gifts[0],
+                1 => verse + &gifts[1] + " and " + &gifts[0],
+                _ => verse + &gift_line + ", and " + &gifts[0],
+            };
             
             println!("{}.\n", verse);
         }
     }
     
-    // Adds all gifts for "day" except the first gift, concat with ", "
-    fn build_gift_line(gifts: [&str; 12], day: usize) -> String {
-        gifts[1..=day].iter().rev().copied().collect::<Vec<&str>>().join(", ")
+    fn get_ordinals() -> [String; 12] {
+        [
+            "first", "second", "third", "fourth", "fifth", "sixth",
+            "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth",
+        ].map(String::from)
     }
 
-    sing_twelve_days_of_christmas(gifts, ordinals);
+    fn get_gifts() -> [String; 12] {
+        [
+            "a Partridge in a Pear Tree",
+            "two Turtle Doves",
+            "three French Hens",
+            "four Calling Birds",
+            "five Gold Rings",
+            "six Geese a Laying",
+            "seven Swans a Swimming",
+            "eight Maids a Milking",
+            "nine Ladies Dancing",
+            "ten Lords a Leaping",
+            "eleven Pipers Piping",
+            "twelve Drummers Drumming",
+        ].map(String::from)
+    }
+
+    // Adds all gifts for "day" except the first gift, concat with ", "
+    fn build_gift_line(gifts: &[String; 12], day: usize) -> String {
+        gifts[1..=day].iter().rev().map(String::as_str).collect::<Vec<&str>>().join(", ")
+    }
+
+    sing_twelve_days_of_christmas();
 }
