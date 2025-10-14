@@ -78,23 +78,23 @@ fn main() {
     println!("The {}th Fibonacci number is: {}", n, fibonacci(n));
     
     const ORDINALS: [&str; 12] = [
-            "first", "second", "third", "fourth", "fifth", "sixth",
-            "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth",
+        "first", "second", "third", "fourth", "fifth", "sixth",
+        "seventh", "eighth", "ninth", "tenth", "eleventh", "twelfth",
     ];
         
     const GIFTS: [&str; 12] = [
-            "a Partridge in a Pear Tree",
-            "two Turtle Doves",
-            "three French Hens",
-            "four Calling Birds",
-            "five Gold Rings",
-            "six Geese a Laying",
-            "seven Swans a Swimming",
-            "eight Maids a Milking",
-            "nine Ladies Dancing",
-            "ten Lords a Leaping",
-            "eleven Pipers Piping",
-            "twelve Drummers Drumming",
+        "a Partridge in a Pear Tree",
+        "two Turtle Doves",
+        "three French Hens",
+        "four Calling Birds",
+        "five Gold Rings",
+        "six Geese a Laying",
+        "seven Swans a Swimming",
+        "eight Maids a Milking",
+        "nine Ladies Dancing",
+        "ten Lords a Leaping",
+        "eleven Pipers Piping",
+        "twelve Drummers Drumming",
     ];
 
     // Day 1: just add the first gift: gifts[0]
@@ -118,17 +118,11 @@ fn main() {
 
     // Adds all gifts for "day" except the first gift, concat with ", "
     fn build_gift_line(day: usize) -> String {
-        let mut gift_line = String::new();
-        
-        for gift in GIFTS[1..=day].iter().rev() {
-            gift_line.push_str(gift);
-            gift_line.push_str(", ");
-        }
-
-        gift_line.pop();
-        gift_line.pop();
-
-        gift_line
+        GIFTS[1..=day].iter()
+            .rev()                  // reverse the order
+            .map(|s| *s)            // dereference &str to str
+            .collect::<Vec<&str>>() // collect into a vector of &str
+            .join(", ")             // join with ", "
     }
 
     sing_twelve_days_of_christmas();
