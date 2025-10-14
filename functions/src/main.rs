@@ -118,7 +118,17 @@ fn main() {
 
     // Adds all gifts for "day" except the first gift, concat with ", "
     fn build_gift_line(day: usize) -> String {
-        GIFTS[1..=day].iter().rev().map(|&x| x).collect::<Vec<&str>>().join(", ")
+        let mut gift_line = String::new();
+        
+        for gift in GIFTS[1..=day].iter().rev() {
+            gift_line.push_str(gift);
+            gift_line.push_str(", ");
+        }
+
+        gift_line.pop();
+        gift_line.pop();
+
+        gift_line
     }
 
     sing_twelve_days_of_christmas();
