@@ -1,0 +1,14 @@
+{
+    "[instructions]": {
+        "editor.wordWrap": "off"
+    },
+    "[markdown]": {
+        "editor.wordWrap": "off"
+    },
+    "[prompt]": {
+        "editor.wordWrap": "off"
+    },
+    "[chatmode]": {
+        "editor.wordWrap": "off"
+    }
+}
